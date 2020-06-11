@@ -1,5 +1,3 @@
-const data = require('../data.json');
-
 const createGraph = function (data) {
   return data.reduce((graph, connection) => {
     const [src, dest] = connection;
@@ -14,19 +12,18 @@ const createGraph = function (data) {
 const bfs = function (pairs, source, target) {
   const graph = createGraph(pairs);
   const visitedList = [];
-  const queue = [];
-  queue.push(source);
+  const queue = graph[source];
   while (queue.length) {
     const currentObj = queue.shift();
     visitedList.push(currentObj);
+    if (currentObj === target) {
+      return true;
+    }
     graph[currentObj].forEach((city) => {
       if (!visitedList.includes(city) && !queue.includes(city)) {
         queue.push(city);
       }
     });
-    if (currentObj === target) {
-      return true;
-    }
   }
   return false;
 };
