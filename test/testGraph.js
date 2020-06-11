@@ -1,0 +1,17 @@
+const assert = require('assert');
+const data = require('../data.json');
+const {bfs} = require('../src/graph');
+
+describe('#bfs', () => {
+  it('should give true if there is any path between two objects', () => {
+    const actual = bfs(data, 'jj', 'aa');
+    const expected = true;
+    assert.equal(actual, expected);
+  });
+
+  it('should give false if there is no path between two objects', () => {
+    const actual = bfs(data, 'bb', 'jj');
+    const expected = false;
+    assert.equal(actual, expected);
+  });
+});
