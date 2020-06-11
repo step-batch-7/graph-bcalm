@@ -12,18 +12,18 @@ const createGraph = function (data) {
 const bfs = function (pairs, source, target) {
   const graph = createGraph(pairs);
   const visitedList = [];
-  const queue = graph[source];
+  const queue = [];
+  queue.push(source);
   while (queue.length) {
     const currentObj = queue.shift();
+    if (currentObj === target) return true;
     visitedList.push(currentObj);
-    if (currentObj === target) {
-      return true;
-    }
-    graph[currentObj].forEach((city) => {
-      if (!visitedList.includes(city) && !queue.includes(city)) {
-        queue.push(city);
-      }
-    });
+    graph[currentObj] &&
+      graph[currentObj].forEach((city) => {
+        if (!visitedList.includes(city) && !queue.includes(city)) {
+          queue.push(city);
+        }
+      });
   }
   return false;
 };
