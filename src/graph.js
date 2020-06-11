@@ -9,22 +9,25 @@ const createGraph = function (data) {
   }, {});
 };
 
+const findRelation = function (graph, visitedList, queue, target) {
+  if (!queue || queue.length === 0) return false;
+  const currentObj = queue.shift();
+  if (currentObj === target) return true;
+  visitedList.push(currentObj);
+  graph[currentObj] &&
+    graph[currentObj].forEach((obj) => {
+      if (!visitedList.includes(obj) && !queue.includes(obj)) {
+        queue.push(obj);
+      }
+    });
+  return findRelation(graph, visitedList, queue, target);
+};
+
 const bfs = function (pairs, source, target) {
   const graph = createGraph(pairs);
   const visitedList = [];
-  const queue = graph[source];
-  while (queue.length) {
-    const currentObj = queue.shift();
-    if (currentObj === target) return true;
-    visitedList.push(currentObj);
-    graph[currentObj] &&
-      graph[currentObj].forEach((city) => {
-        if (!visitedList.includes(city) && !queue.includes(city)) {
-          queue.push(city);
-        }
-      });
-  }
-  return false;
+  const queue = graph[source] && [...graph[source]];
+  return findRelation(graph, visitedList, queue, target);
 };
 
 module.exports = {bfs};

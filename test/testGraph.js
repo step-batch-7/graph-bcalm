@@ -1,29 +1,26 @@
 const assert = require('assert');
-const data = require('../data.json');
 const {bfs} = require('../src/graph');
+const data = require('../data.json');
 
-describe('#bfs', () => {
-  it('should give true if there is any path between two objects', () => {
-    const actual = bfs(data, 'jj', 'aa');
-    const expected = true;
-    assert.equal(actual, expected);
+describe('bfs()', function () {
+  it('should return false if source and target are not connected', function () {
+    assert.strictEqual(bfs(data, 'bb', 'jj'), false);
+    assert.strictEqual(bfs(data, 'mm', 'jj'), false);
   });
-
-  it('should give false if there is no path between two objects', () => {
-    const actual = bfs(data, 'bb', 'jj');
-    const expected = false;
-    assert.equal(actual, expected);
+  it('should return true if source and target are connected', function () {
+    assert.ok(bfs(data, 'jj', 'aa'));
+    assert.ok(bfs(data, 'aa', 'hh'));
+    assert.ok(bfs(data, 'hh', 'ii'));
+    assert.ok(bfs(data, 'ii', 'ee'));
+    assert.ok(bfs(data, 'ee', 'mm'));
   });
-
-  it('should give true if a single node is connected to itself', () => {
-    const actual = bfs(data, 'nn', 'nn');
-    const expected = true;
-    assert.equal(actual, expected);
+  it('should return true if it is connected to itself', function () {
+    assert.ok(bfs(data, 'aa', 'aa'));
   });
-
-  it('should give false if a single node is connected to itself', () => {
-    const actual = bfs(data, 'oo', 'oo');
-    const expected = false;
-    assert.equal(actual, expected);
+  it('should return false if it is not connected to itself', function () {
+    assert.strictEqual(bfs(data, 'zz', 'zz'), false);
+  });
+  it('should return false if edge is not present', function () {
+    assert.strictEqual(bfs(data, 'xx', 'xx'), false);
   });
 });
