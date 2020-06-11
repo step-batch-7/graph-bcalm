@@ -10,17 +10,18 @@ const createGraph = function (data) {
 };
 
 const findRelation = function (graph, visitedList, queue, target) {
-  if (!queue || queue.length === 0) return false;
-  const currentObj = queue.shift();
-  if (currentObj === target) return true;
-  visitedList.push(currentObj);
-  graph[currentObj] &&
-    graph[currentObj].forEach((obj) => {
-      if (!visitedList.includes(obj) && !queue.includes(obj)) {
-        queue.push(obj);
-      }
-    });
-  return findRelation(graph, visitedList, queue, target);
+  while (queue && queue.length) {
+    const currentObj = queue.shift();
+    if (currentObj === target) return true;
+    visitedList.push(currentObj);
+    graph[currentObj] &&
+      graph[currentObj].forEach((obj) => {
+        if (!visitedList.includes(obj) && !queue.includes(obj)) {
+          queue.push(obj);
+        }
+      });
+  }
+  return false;
 };
 
 const bfs = function (pairs, source, target) {
