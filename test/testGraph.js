@@ -20,4 +20,10 @@ describe('#bfs', () => {
     const expected = true;
     assert.equal(actual, expected);
   });
+
+  it('should give false if a single node is connected to itself', () => {
+    const actual = bfs(data, 'oo', 'oo');
+    const expected = false;
+    assert.equal(actual, expected);
+  });
 });

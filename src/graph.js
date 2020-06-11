@@ -12,8 +12,7 @@ const createGraph = function (data) {
 const bfs = function (pairs, source, target) {
   const graph = createGraph(pairs);
   const visitedList = [];
-  const queue = [];
-  queue.push(source);
+  const queue = graph[source];
   while (queue.length) {
     const currentObj = queue.shift();
     if (currentObj === target) return true;
